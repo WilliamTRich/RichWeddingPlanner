@@ -1,0 +1,11 @@
+@model MyViewModel
+@await Html.PartialAsync("_Nav")
+<h1>@Model.Wedding.WedOne and @Model.Wedding.WedTwo's wedding</h1>
+<p>Date: @Model.Wedding.Date</p>
+<p>Guests:</p>
+<ul>
+    @foreach (RSVP r in @Model.Wedding.RSVPs)
+    {
+        <li>@r.User.FirstName @r.User.LastName</li>
+    }
+</ul>

@@ -1,0 +1,22 @@
+@model Wedding
+@await Html.PartialAsync("_Nav")
+<h1>Plan a Wedding</h1>
+<form asp-action="CreateWedding" asp-controller="Home" method="post">
+
+    <input type="hidden" asp-for="UserId" value=@ViewBag.UserId>
+
+    <label asp-for="WedOne"></label>
+    <input asp-for="WedOne">
+    <span asp-validation-for="WedOne"></span>
+    <label asp-for="WedTwo"></label>
+    <input asp-for="WedTwo">
+    <span asp-validation-for="WedTwo"></span>
+    <label asp-for="Date"></label>
+    <input asp-for="Date" type="date">
+    <span asp-validation-for="Date"></span>
+    <label asp-for="Address"></label>
+    <input asp-for="Address">
+    <span asp-validation-for="Address"></span>
+
+    <button type="submit" class="btn btn-info">Create</button>
+</form>

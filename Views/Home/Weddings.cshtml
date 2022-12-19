@@ -1,0 +1,47 @@
+@model MyViewModel
+@await Html.PartialAsync("_Nav")
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Wedding of</th>
+            <th scope="col">Date</th>
+            <th scope="col">Guest Count</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Wedding w in @Model.Weddings)
+        {
+            <tr>
+                <td>@w.WedOne and @w.WedTwo</td>
+                <td>@w.Date</td>
+                <td>@w.RSVPs.Count</td>
+                @if (w.UserId == @Model.User.UserId)
+                {
+                    <td><a asp-action="DeleteWedding" asp-controller="Home" asp-route-id=@w.WeddingId>Delete</a></td>
+                }
+                else if (w.RSVPs.Any(r => r.UserId == @Model.User.UserId))
+                {
+                    <td>
+                        <form asp-action="UnRSVPWedding" asp-controller="Home" asp-route-id=@w.WeddingId method="post">
+                            <input type="hidden" asp-for="RSVP.RSVPId" value=@w.RSVPs>
+                            <input type="hidden" asp-for="Wedding.WeddingId" value=@w.WeddingId>
+                            <input type="hidden" asp-for="User.UserId" value=@Model.User.UserId>
+                            <button type="submit" class="btn btn-info">Un-RSVP</button>
+                        </form>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <form asp-action="RSVPWedding" asp-controller="Home" asp-route-id=@w.WeddingId method="post">
+                            <input type="hidden" asp-for="Wedding.WeddingId" value=@w.WeddingId>
+                            <input type="hidden" asp-for="User.UserId" value=@Model.User.UserId>
+                            <button type="submit" class="btn btn-info">RSVP</button>
+                        </form>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
